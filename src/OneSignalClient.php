@@ -294,4 +294,30 @@ class OneSignalClient
         }
         return $this->client->put(self::API_URL . $endPoint, $this->headers);
     }
+//     this is missing
+    public function sendNotificationUsingTags($message, array $tags, $url = null, $data = null, $buttons = null, $schedule = null) {
+        $contents = array(
+            "en" => $message
+        );
+        $params = array(
+            'app_id' => $this->appId,
+            'contents' => $contents,
+            'tags' => $tags,
+//            'include_player_ids' => array('All')
+        );
+        if (isset($url)) {
+            $params['url'] = $url;
+        }
+        if (isset($data)) {
+            $params['data'] = $data;
+        }
+        if (isset($buttons)) {
+            $params['buttons'] = $buttons;
+        }
+        if (isset($schedule)) {
+            $params['send_after'] = $schedule;
+        }
+        $this->sendNotificationCustom($params);
+    }
+
 }
